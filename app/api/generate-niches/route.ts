@@ -59,7 +59,23 @@ ${body.input}
       parsed = JSON.parse(raw.slice(start, end + 1));
     }
 
-    const items = z.array(ItemSchema).parse(parsed.items);
+    const items = z.array(ItemSchema).parse(
+  parsed.items.map((it: any) => ({
+    name: it.name ?? "Unnamed niche",
+    category: it.category ?? "services",
+    shortDesc: it.shortDesc ?? "Niche local service business.",
+    whyItWorks: it.whyItWorks ?? "Solves a specific local problem with recurring demand.",
+    targetCustomers: it.targetCustomers ?? "Local customers with recurring needs.",
+    startupCostMin: it.startupCostMin ?? 1000,
+    startupCostMax: it.startupCostMax ?? 5000,
+    difficulty: it.difficulty ?? 2,
+    demandSignals: it.demandSignals ?? "Mentions in forums and local demand.",
+    moat: it.moat ?? "Local relationships and specialized focus.",
+    riskFlags: it.riskFlags ?? "Local competition.",
+    sources: it.sources ?? "User provided text",
+  }))
+);
+
     return NextResponse.json({ items });
   } catch (e: any) {
     return NextResponse.json(
