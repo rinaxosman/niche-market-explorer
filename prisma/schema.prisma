@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+
+model Niche {
+  id              String   @id @default(cuid())
+  name            String
+  category        String
+  shortDesc       String
+  whyItWorks      String
+  targetCustomers String
+  startupCostMin  Int
+  startupCostMax  Int
+  difficulty      Int
+  demandSignals   String
+  moat            String
+  riskFlags       String
+  sources         String
+  createdAt       DateTime @default(now())
+}
